@@ -2,6 +2,7 @@ require './artist'
 require './song'
 require './genre'
 
+# require_relative
 
 def test(title, &b)
   begin
@@ -122,6 +123,7 @@ test 'A genre has a name' do
 end
 
 test 'A genre has many songs' do
+  Song.reset_songs
   genre = Genre.new.tap{|g| g.name = 'rap'}
   [1,2].each do
     song = Song.new
