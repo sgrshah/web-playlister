@@ -1,3 +1,8 @@
+require './artist'
+require './song'
+require './genre'
+
+
 def test(title, &b)
   begin
     if b
