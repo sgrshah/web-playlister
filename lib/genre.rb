@@ -15,7 +15,7 @@ class Genre
   end
 
   def self.reset_genres
-    Genres.delete_if {|value| value || !value} 
+    Genres.clear
   end
 
 end

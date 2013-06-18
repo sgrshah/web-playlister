@@ -12,7 +12,7 @@ class Artist
   end
 
   def self.reset_artists
-    Roster.delete_if {|value| value || !value}
+    Roster.clear
   end
 
   def self.count
