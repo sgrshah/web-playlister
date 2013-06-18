@@ -2,6 +2,7 @@ require_relative 'lib/artist'
 require_relative 'lib/song'
 require_relative 'lib/genre'
 require 'pry'
+require 'pp'
 
 def test(title, &b)
   begin
@@ -209,12 +210,27 @@ songs = Dir.entries("data").delete_if{|str| str == "." || str == ".."}
 # binding.pry
 
 songs.each do |filename|
-  puts "attempting to parse: #{filename}"
-  artist = filename.split(" - ")[0]
-  song = filename.split(" - ")[1].split("[")[0].strip
-  genre = filename.split(" - ")[1].split(/\[|\]/)[1]
-  p [artist, song, genre]
-  puts
+
+  artist_name = filename.split(" - ")[0]
+  song_name = filename.split(" - ")[1].split("[")[0].strip
+  genre_name = filename.split(" - ")[1].split(/\[|\]/)[1]
+
+  artist = Artist.new
+  artist.name = artist_name
+  
+  song = Song.new
+  song.name = song_name
+  
+  genre = Genre.new
+  genre.name = genre_name
+
+  song.genre = genre
+  artist.add_song(song)
+
+end
+
+Artist.all.each do |artist|
+  pp artist
 end
 
 
