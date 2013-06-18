@@ -9,11 +9,13 @@ class Artist
   end
 
   def self.count
-    @@count
+    # @@count
+    All.count
   end
 
   def self.reset_artists
-    @@count = 0
+    # @@count = 0
+    All.clear
   end
 
   def self.all
@@ -29,6 +31,15 @@ class Artist
     @genres << song.genre
     song.genre.artists << self if song.genre && !song.genre.artists.include?(self)
     song.artist = self
+  end
+
+  def self.find_by_name(name)
+    All.each do |artist|
+      if artist.name == name
+        return artist
+      end
+    end
+    return false
   end
 
 end
