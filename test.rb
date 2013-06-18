@@ -146,14 +146,12 @@ end
 
 test 'A genres Artists are unique' do
   genre = Genre.new.tap{|g| g.name = 'rap'}
-  genre2 = Genre.new.tap{|g| g.name = 'rap'}
-
   artist = Artist.new
 
   [1,2].each do
     song = Song.new
     song.genre = genre
-    artist.add_song(songs)
+    artist.add_song(song)
   end
 
   assert_equal genre.artists.count, 1
