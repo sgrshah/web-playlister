@@ -1,6 +1,7 @@
 require_relative 'lib/artist'
 require_relative 'lib/song'
 require_relative 'lib/genre'
+require 'pry'
 
 def test(title, &b)
   begin
@@ -175,10 +176,47 @@ end
 # without your song class having this functionality, so go ahead and try
 # to use assert and assert_equal to write some tests.
 
-test 'Can initialize a song'
-test 'A song can have a name'
-test 'A song can have a genre'
-test 'A song has an artist'
+test 'Can initialize a song' do
+  assert Song.new
+end
+
+
+test 'A song can have a name' do
+  song = Song.new
+  song.name = "happy birthday"
+  assert song.name
+
+end
+
+test 'A song can have a genre' do
+  song = Song.new
+  genre = Genre.new
+  song.genre = genre
+  assert song.genre
+end
+
+test 'A song has an artist' do
+  artist = Artist.new
+  artist.name = "Kanye West"
+  song = Song.new
+  song.name = "Bound 2"
+  artist.add_song(song)
+  assert_equal song.artist, artist
+end
+
+songs = Dir.entries("data").delete_if{|str| str == "." || str == ".."}
+
+# binding.pry
+
+songs.each do |filename|
+  puts "attempting to parse: #{filename}"
+  artist = filename.split(" - ")[0]
+  song = filename.split(" - ")[1].split("[")[0].strip
+  genre = filename.split(" - ")[1].split(/\[|\]/)[1]
+  p [artist, song, genre]
+  puts
+end
+
 
 # Part 2: Site Generation Using ERB
 # write a ruby script that parses the data within the data directory
