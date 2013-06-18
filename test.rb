@@ -211,8 +211,6 @@ Song.reset_songs
 
 songs = Dir.entries("data").delete_if{|str| str == "." || str == ".."}
 
-# binding.pry
-
 songs.each do |filename|
 
   artist_name = filename.split(" - ")[0]
@@ -233,7 +231,13 @@ songs.each do |filename|
 
 end
 
-binding.pry
+loop do
+  puts "Name an artist?"
+  choice = gets.chomp
+  p Artist.all.select{|artist| artist.name == choice }[0].songs.collect{|song| song.name}
+end
+
+# binding.pry
 
 
 # Part 2: Site Generation Using ERB
