@@ -1,8 +1,6 @@
-require './artist'
-require './song'
-require './genre'
-
-# require_relative
+require_relative 'lib/artist'
+require_relative 'lib/song'
+require_relative 'lib/genre'
 
 def test(title, &b)
   begin
@@ -148,12 +146,14 @@ end
 
 test 'A genres Artists are unique' do
   genre = Genre.new.tap{|g| g.name = 'rap'}
+  genre2 = Genre.new.tap{|g| g.name = 'rap'}
+
   artist = Artist.new
 
   [1,2].each do
     song = Song.new
     song.genre = genre
-    artist.add_song(song)
+    artist.add_song(songs)
   end
 
   assert_equal genre.artists.count, 1
