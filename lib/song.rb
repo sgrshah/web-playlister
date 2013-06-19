@@ -13,6 +13,10 @@ class Song
     All
   end
 
+   def self.reset_songs
+    All.clear
+  end
+
   def genre=(genre)
     @genre = genre
     genre.songs << self

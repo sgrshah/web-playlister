@@ -208,6 +208,39 @@ end
 # and uses the classes defined above to instantiate Song, Artist, and Genres
 # for each file. These instances should be correctly associated to each other
 # so that artist.genre will return a Genre object, etc.
+Artist.reset_artists
+Genre.reset_genres
+Song.rest_songs
+
+  files = Dir.entries("data")
+  files.shift
+  files.shift
+
+  def parse
+
+    files.each do |song_file|
+
+      artist = song_file.split(" - ")[0].split("/")
+      song = song_file.split(" - ")[1].split("[").first.strip
+      genre = song_file.split(" - ")[1].split("[").last.split("]").first.strip
+
+      new_artist = Artist.find_by_name(artist) || Artist.new
+      new_artist.name = artist
+
+      new_song = Song.new
+      new_song.name = song
+
+      new_genre = Genre.find_by_name(genre) || Genre.new
+      new_genre.name = genre
+
+      new_artist.add_song(new_song)
+
+    end
+  end
+
+  # puts Artist.all.collect {|a| a.name}
+  # puts Genre.all.collect {|a| a.genre}
+
 
 # This script should additionally Generate a website that has the following sections:
 # An index page that links to the two sections of the sites, artists and genres

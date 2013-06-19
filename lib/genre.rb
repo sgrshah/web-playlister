@@ -18,4 +18,13 @@ class Genre
     Genres.clear
   end
 
+  def self.find_by_name(name)
+    Genres.each do |genre|
+      if genre.name == name
+        return genre
+      end
+    end
+    return false
+  end
+
 end
