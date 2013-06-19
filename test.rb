@@ -209,10 +209,10 @@ Artist.reset_artists
 Genre.reset_genres
 Song.reset_songs
 
-songs = Dir.entries("data").delete_if{|str| str == "." || str == ".."}
+songs = Dir.entries("data").delete_if{|str| str[0] == "."}
 
 songs.each do |filename|
-
+  puts "parsing #{filename}"
   artist_name = filename.split(" - ")[0]
   song_name = filename.split(" - ")[1].split("[")[0].strip
   genre_name = filename.split(" - ")[1].split(/\[|\]/)[1]
