@@ -1,8 +1,9 @@
-require './artist'
-require './song'
-require './genre'
 
-# require_relative
+
+require_relative "lib/artist"
+require_relative "lib/song"
+require_relative "lib/genre"
+
 
 def test(title, &b)
   begin
@@ -129,7 +130,6 @@ test 'A genre has many songs' do
     song = Song.new
     song.genre = genre
   end
-
   assert_equal genre.songs.count, 2
 end
 
@@ -177,16 +177,73 @@ end
 # without your song class having this functionality, so go ahead and try
 # to use assert and assert_equal to write some tests.
 
-test 'Can initialize a song'
-test 'A song can have a name'
-test 'A song can have a genre'
-test 'A song has an artist'
+test 'Can initialize a song' do
+ assert Song.new
+end
+
+
+test 'A song can have a name' do
+  song = Song.new
+  song.name = "Set Fire to the Rain"
+  assert_equal song.name, "Set Fire to the Rain"
+end
+
+
+test 'A song can have a genre' do
+  song = Song.new
+  genre = Genre.new 
+  genre.name = "jazz"
+  song.genre = genre
+  assert song.genre
+end
+
+test 'A song has an artist' do
+  song = Song.new
+  artist = Artist.new 
+  artist.name = "Bon Iver"
+  song.name = "Skinny Love"
+  artist.add_song(song)
+  assert_equal song.artist, "Bon Iver"
+end
 
 # Part 2: Site Generation Using ERB
 # write a ruby script that parses the data within the data directory
 # and uses the classes defined above to instantiate Song, Artist, and Genres
 # for each file. These instances should be correctly associated to each other
 # so that artist.genre will return a Genre object, etc.
+Artist.reset_artists
+Genre.reset_genres
+Song.rest_songs
+
+  files = Dir.entries("data")
+  files.shift
+  files.shift
+
+  def parse
+
+    files.each do |song_file|
+
+      artist = song_file.split(" - ")[0].split("/")
+      song = song_file.split(" - ")[1].split("[").first.strip
+      genre = song_file.split(" - ")[1].split("[").last.split("]").first.strip
+
+      new_artist = Artist.find_by_name(artist) || Artist.new
+      new_artist.name = artist
+
+      new_song = Song.new
+      new_song.name = song
+
+      new_genre = Genre.find_by_name(genre) || Genre.new
+      new_genre.name = genre
+
+      new_artist.add_song(new_song)
+
+    end
+  end
+
+  # puts Artist.all.collect {|a| a.name}
+  # puts Genre.all.collect {|a| a.genre}
+
 
 # This script should additionally Generate a website that has the following sections:
 # An index page that links to the two sections of the sites, artists and genres
