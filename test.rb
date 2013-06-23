@@ -1,9 +1,8 @@
-
-
-require_relative "lib/artist"
-require_relative "lib/song"
-require_relative "lib/genre"
-
+require_relative 'lib/artist'
+require_relative 'lib/song'
+require_relative 'lib/genre'
+require 'pry'
+require 'pp'
 
 def test(title, &b)
   begin
@@ -178,33 +177,66 @@ end
 # to use assert and assert_equal to write some tests.
 
 test 'Can initialize a song' do
- assert Song.new
+  assert Song.new
 end
 
 
 test 'A song can have a name' do
   song = Song.new
-  song.name = "Set Fire to the Rain"
-  assert_equal song.name, "Set Fire to the Rain"
-end
+  song.name = "happy birthday"
+  assert song.name
 
+end
 
 test 'A song can have a genre' do
   song = Song.new
-  genre = Genre.new 
-  genre.name = "jazz"
+  genre = Genre.new
   song.genre = genre
   assert song.genre
 end
 
 test 'A song has an artist' do
+  artist = Artist.new
+  artist.name = "Kanye West"
   song = Song.new
-  artist = Artist.new 
-  artist.name = "Bon Iver"
-  song.name = "Skinny Love"
+  song.name = "Bound 2"
   artist.add_song(song)
-  assert_equal song.artist, "Bon Iver"
+  assert_equal song.artist, artist
 end
+
+Artist.reset_artists
+Genre.reset_genres
+Song.reset_songs
+
+songs = Dir.entries("data").delete_if{|str| str[0] == "."}
+
+songs.each do |filename|
+  puts "parsing #{filename}"
+  artist_name = filename.split(" - ")[0]
+  song_name = filename.split(" - ")[1].split("[")[0].strip
+  genre_name = filename.split(" - ")[1].split(/\[|\]/)[1]
+
+  artist = Artist.find_by_name(artist_name) || Artist.new
+  artist.name = artist_name
+  
+  song = Song.new
+  song.name = song_name
+  
+  genre = Genre.find_by_name(genre_name) || Genre.new
+  genre.name = genre_name
+
+  song.genre = genre
+  artist.add_song(song)
+
+end
+
+loop do
+  puts "Name an artist?"
+  choice = gets.chomp
+  p Artist.all.select{|artist| artist.name == choice }[0].songs.collect{|song| song.name}
+end
+
+# binding.pry
 
 # Part 2: Site Generation Using ERB
 # write a ruby script that parses the data within the data directory

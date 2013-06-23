@@ -1,40 +1,41 @@
-class Artist 
 
+class Artist
   attr_accessor :name, :songs, :genres
-
-  Roster = []
+  All = []
 
   def initialize
-    Roster << self
+    All << self
     @songs = []
     @genres = []
   end
 
-  def self.reset_artists
-    Roster.clear
+  def self.count
+    # @@count
+    All.count
   end
 
-  def self.count
-    Roster.count
-  end 
+  def self.reset_artists
+    # @@count = 0
+    All.clear
+  end
 
   def self.all
-    Roster 
+    All
   end
 
   def songs_count
-    @songs.count
+    @number_of_songs = @songs.length
   end
 
   def add_song(song)
     @songs << song
-    @genres << song.genre 
-    song.artist = self 
+    @genres << song.genre
     song.genre.artists << self if song.genre && !song.genre.artists.include?(self)
+    song.artist = self
   end
 
   def self.find_by_name(name)
-    Roster.each do |artist|
+    All.each do |artist|
       if artist.name == name
         return artist
       end

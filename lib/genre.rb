@@ -1,25 +1,27 @@
 class Genre
-
   attr_accessor :name, :songs, :artists
 
-  Genres = []
+  All = []
 
   def initialize
-     Genres << self 
-     @songs = []
-     @artists = []
+    @artists = []
+    All << self
   end
 
-  def self.all
-    Genres
+  def songs
+    Song.all.select { |song| song.genre.name == self.name if song.genre}
   end
 
   def self.reset_genres
-    Genres.clear
+    All.clear
+  end
+
+  def self.all
+    All
   end
 
   def self.find_by_name(name)
-    Genres.each do |genre|
+    All.each do |genre|
       if genre.name == name
         return genre
       end
@@ -28,3 +30,4 @@ class Genre
   end
 
 end
+
