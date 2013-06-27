@@ -204,37 +204,38 @@ test 'A song has an artist' do
   assert_equal song.artist, artist
 end
 
-Artist.reset_artists
-Genre.reset_genres
-Song.reset_songs
 
-songs = Dir.entries("data").delete_if{|str| str[0] == "."}
+# Artist.reset_artists
+# Genre.reset_genres
+# Song.reset_songs
 
-songs.each do |filename|
-  puts "parsing #{filename}"
-  artist_name = filename.split(" - ")[0]
-  song_name = filename.split(" - ")[1].split("[")[0].strip
-  genre_name = filename.split(" - ")[1].split(/\[|\]/)[1]
+# songs = Dir.entries("data").delete_if{|str| str[0] == "."}
 
-  artist = Artist.find_by_name(artist_name) || Artist.new
-  artist.name = artist_name
+# songs.each do |filename|
+#   puts "parsing #{filename}"
+#   artist_name = filename.split(" - ")[0]
+#   song_name = filename.split(" - ")[1].split("[")[0].strip
+#   genre_name = filename.split(" - ")[1].split(/\[|\]/)[1]
+
+#   artist = Artist.find_by_name(artist_name) || Artist.new
+#   artist.name = artist_name
   
-  song = Song.new
-  song.name = song_name
+#   song = Song.new
+#   song.name = song_name
   
-  genre = Genre.find_by_name(genre_name) || Genre.new
-  genre.name = genre_name
+#   genre = Genre.find_by_name(genre_name) || Genre.new
+#   genre.name = genre_name
 
-  song.genre = genre
-  artist.add_song(song)
+#   song.genre = genre
+#   artist.add_song(song)
 
-end
+# end
 
-loop do
-  puts "Name an artist?"
-  choice = gets.chomp
-  p Artist.all.select{|artist| artist.name == choice }[0].songs.collect{|song| song.name}
-end
+# loop do
+#   puts "Name an artist?"
+#   choice = gets.chomp
+#   p Artist.all.select{|artist| artist.name == choice }[0].songs.collect{|song| song.name}
+# end
 
 # binding.pry
 
@@ -243,35 +244,35 @@ end
 # and uses the classes defined above to instantiate Song, Artist, and Genres
 # for each file. These instances should be correctly associated to each other
 # so that artist.genre will return a Genre object, etc.
-Artist.reset_artists
-Genre.reset_genres
-Song.rest_songs
+# Artist.reset_artists
+# Genre.reset_genres
+# Song.rest_songs
 
-  files = Dir.entries("data")
-  files.shift
-  files.shift
+#   files = Dir.entries("data")
+#   files.shift
+#   files.shift
 
-  def parse
+#   def parse
 
-    files.each do |song_file|
+#     files.each do |song_file|
 
-      artist = song_file.split(" - ")[0].split("/")
-      song = song_file.split(" - ")[1].split("[").first.strip
-      genre = song_file.split(" - ")[1].split("[").last.split("]").first.strip
+#       artist = song_file.split(" - ")[0].split("/")
+#       song = song_file.split(" - ")[1].split("[").first.strip
+#       genre = song_file.split(" - ")[1].split("[").last.split("]").first.strip
 
-      new_artist = Artist.find_by_name(artist) || Artist.new
-      new_artist.name = artist
+#       new_artist = Artist.find_by_name(artist) || Artist.new
+#       new_artist.name = artist
 
-      new_song = Song.new
-      new_song.name = song
+#       new_song = Song.new
+#       new_song.name = song
 
-      new_genre = Genre.find_by_name(genre) || Genre.new
-      new_genre.name = genre
+#       new_genre = Genre.find_by_name(genre) || Genre.new
+#       new_genre.name = genre
 
-      new_artist.add_song(new_song)
+#       new_artist.add_song(new_song)
 
-    end
-  end
+#     end
+#   end
 
   # puts Artist.all.collect {|a| a.name}
   # puts Genre.all.collect {|a| a.genre}

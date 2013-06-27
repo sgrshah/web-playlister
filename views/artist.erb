@@ -1,0 +1,16 @@
+<h1><%=@artist.name%>'s Page</h1>
+
+	<ul class="navigation">
+		<li><a href="/">Home</a></li>
+		<li><a href="/artists">Artists</a></li>
+		<li><a href="/genres">Genres</a></li>
+		<li><a href="/songs">Songs</a></li>
+	</ul>
+
+<h3>Here are my awesome songs:</h3>
+<ol>
+	<% @artist.songs.each do |song| %>
+		<li><%= song.name %></li>
+	<% end %>
+</ol>
+

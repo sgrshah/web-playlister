@@ -1,0 +1,16 @@
+<html>
+<body>
+	<h1>Welcome to THE JUKEBOX OF THE MOTHER FUCKIN FUTURE</h1>
+	<ul class="navigation">
+		<li><a href="/">Home</a></li>
+		<li><a href="/artists">Artists</a></li>
+		<li><a href="/genres">Genres</a></li>
+		<li><a href="/songs">Songs</a></li>
+	</ul>
+	<ol>
+		<% @genres.each_with_index do |genre, int| %>
+			<li><a href="/genres/<%=genre.name%>"><%= "#{genre.name}" %></a></li>
+		<% end %>
+	</ol>
+</body>
+</html>

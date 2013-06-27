@@ -7,7 +7,7 @@ class Parse
     files.shift
 
     files.each do |song_file|
-
+      puts "parsing #{song_file}"
       artist = song_file.split(" - ")[0].split("/").first.strip
       song = song_file.split(" - ")[1].split("[").first.strip
       genre = song_file.split(" - ")[1].split("[").last.split("]").first.strip
